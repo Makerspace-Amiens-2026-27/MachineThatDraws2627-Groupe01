@@ -13,5 +13,8 @@ Une phrase qui explique ce que fait le projet et pour qui.
 
 ## Équipe
 
-- Prénom Nom
-- Prénom Nom
+- Nathan BARONICK
+- Lylian COELHO
+- Timothé LEJOSNE
+- Archibald ROZIE
+- Romain MAGNIER
