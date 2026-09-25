@@ -1,0 +1,12 @@
+# Mises à jour automatiques des actions GitHub utilisées par les workflows
+# (une pull request groupée par mois au maximum).
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      actions:
+        patterns:
+          - "*"

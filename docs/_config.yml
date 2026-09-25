@@ -1,0 +1,47 @@
+title: Doc Projet # À MODIFIER : le nom de votre projet
+description: Documentation du projet # À MODIFIER : une phrase qui résume votre projet
+
+# À MODIFIER : l'adresse de VOTRE repo GitHub (sans "/" à la fin).
+# Elle sert aux boutons et liens vers vos fichiers sources, et au lien
+# "Modifier cette page sur GitHub" en bas de chaque page.
+gh_edit_repository: "https://github.com/Makerspace-Amiens/template-project"
+
+# NE RIEN MODIFIER CI-DESSOUS SI VOUS N'ETES PAS CERTAINS DE CE QUE VOUS FAITES
+
+# Thème
+theme: just-the-docs
+
+# Paramètres optionnels de "Just the Docs"
+just_the_docs:
+  navigation_depth: 5
+  search_enabled: true
+  search_indexing: true
+
+# Diagrammes Mermaid : blocs de code ```mermaid dans les pages
+mermaid:
+  version: "11.17.2"
+
+# Lien "Modifier cette page sur GitHub" en bas de chaque page
+gh_edit_link: true
+gh_edit_link_text: "Modifier cette page sur GitHub"
+gh_edit_branch: "main"
+gh_edit_source: docs
+gh_edit_view_mode: "edit"
+
+# Encadrés utilisables dans les pages :
+#   {: .a_modifier }      contenu d'exemple à remplacer par le vôtre
+#   {: .a_supprimer }     consigne du template, à supprimer avant le rendu
+# La CI du repo liste ceux qui restent (onglet Actions sur GitHub).
+callouts:
+  a_modifier:
+    title: À modifier
+    color: yellow
+  a_supprimer:
+    title: À supprimer
+    color: red
+  note:
+    title: Note
+    color: blue
+  warning:
+    title: Attention
+    color: red

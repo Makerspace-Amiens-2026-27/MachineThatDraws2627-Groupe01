@@ -1,0 +1,7 @@
+{%- comment -%}
+Affiche un schéma (.kicad_sch) ou un PCB (.kicad_pcb) avec KiCanvas.
+Utilisation : {% include kicad.html src="assets/kicad/ma-carte.kicad_pcb" %}
+Paramètre optionnel : controles="full" (barre latérale avec la liste des composants)
+{%- endcomment -%}
+<script type="module" src="https://kicanvas.org/kicanvas/kicanvas.js"></script>
+<kicanvas-embed src="{{ include.src | relative_url }}" controls="{{ include.controles | default: 'basic' }}" style="width: 100%; height: {{ include.hauteur | default: '500px' }};"></kicanvas-embed>

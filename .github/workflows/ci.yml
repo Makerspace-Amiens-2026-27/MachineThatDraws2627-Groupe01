@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+
+jobs:
+  # Build job
+  build:
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./docs
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3' # Not needed with a .ruby-version file
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+          cache-version: 0 # Increment this number if you need to re-download cached gems
+          working-directory: ${{env.working-directory}}
+      - name: Build with Jekyll
+        # Mêmes conditions que la publication (production, URL du site renseignée)
+        run: |
+          echo "url: \"https://${{ github.repository_owner }}.github.io\"" > _config_pages.yml
+          echo "baseurl: \"/${{ github.event.repository.name }}\"" >> _config_pages.yml
+          bundle exec jekyll build --config _config.yml,_config_pages.yml
+        env:
+          JEKYLL_ENV: production
+        working-directory: ${{env.working-directory}}
+
+  # Vérifications du contenu : n'empêchent pas la publication du site,
+  # les résultats apparaissent dans l'onglet Actions et dans les pull requests.
+  verifications:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Blocs "À modifier" / "À supprimer" restants
+        run: |
+          grep -rnE '^\{: *\.a_(modifier|supprimer) *\}|\*\*À (modifier|supprimer)\*\*' docs project README.md --include='*.md' | sort -t: -k1,1 -k2,2n > marqueurs.txt || true
+          while IFS=: read -r fichier ligne texte; do
+            case "$texte" in
+              *supprimer*) echo "::warning file=$fichier,line=$ligne::Bloc « À supprimer » encore présent" ;;
+              *)           echo "::warning file=$fichier,line=$ligne::Bloc « À modifier » encore présent" ;;
+            esac
+          done < marqueurs.txt
+          echo "### Blocs du template restants : $(wc -l < marqueurs.txt)" >> "$GITHUB_STEP_SUMMARY"
+          sed 's/^/- /' marqueurs.txt | cut -d: -f1,2 >> "$GITHUB_STEP_SUMMARY"
+      - name: Poids des fichiers
+        run: |
+          erreur=0
+          while IFS= read -r fichier; do
+            taille=$(stat -c %s "$fichier")
+            mo=$(( taille / 1024 / 1024 ))
+            if [ "$taille" -gt $(( 25 * 1024 * 1024 )) ]; then
+              echo "::error file=$fichier::Fichier trop lourd (${mo} Mo, maximum 25 Mo). Compressez-le ou hébergez-le ailleurs."
+              erreur=1
+            elif [ "$taille" -gt $(( 2 * 1024 * 1024 )) ] && echo "$fichier" | grep -qiE '\.(jpe?g|png|gif|webp)$'; then
+              echo "::warning file=$fichier::Image lourde (${mo} Mo, conseillé : moins de 2 Mo). Réduisez sa résolution."
+            fi
+          done < <(git ls-files)
+          exit $erreur

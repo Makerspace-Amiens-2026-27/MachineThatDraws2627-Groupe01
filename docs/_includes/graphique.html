@@ -1,0 +1,69 @@
+{%- comment -%}
+Trace un graphique à partir d'un fichier CSV avec Chart.js.
+Utilisation : {% include graphique.html csv="assets/data/mesures.csv" titre="Titre" y="Unité de l'axe Y" %}
+Paramètre optionnel : type="line" (par défaut), "bar" ou "scatter"
+Le CSV : une ligne d'en-tête, la 1re colonne pour l'axe X, une colonne par courbe.
+Séparateur "," ou ";" (export tableur français, virgule décimale acceptée).
+{%- endcomment -%}
+<figure class="graphique">
+  <canvas></canvas>
+  <figcaption class="fs-2"><a href="{{ include.csv | relative_url }}">Télécharger les données (CSV)</a></figcaption>
+</figure>
+<script>
+(function () {
+  var figure = document.currentScript.previousElementSibling;
+  var type = "{{ include.type | default: 'line' }}";
+
+  window.chargementChartJs = window.chargementChartJs || new Promise(function (ok, erreur) {
+    var script = document.createElement("script");
+    script.src = "https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js";
+    script.onload = ok;
+    script.onerror = erreur;
+    document.head.appendChild(script);
+  });
+
+  function lireCsv(texte) {
+    var lignes = texte.trim().split(/\r?\n/).filter(function (l) { return l.trim() !== ""; });
+    var separateur = lignes[0].indexOf(";") >= 0 ? ";" : ",";
+    var decoupe = lignes.map(function (l) { return l.split(separateur).map(function (c) { return c.trim(); }); });
+    var nombre = function (c) { return c === "" ? null : Number(separateur === ";" ? c.replace(",", ".") : c); };
+    return { entetes: decoupe[0], lignes: decoupe.slice(1).map(function (l) { return l.map(nombre); }), brut: decoupe.slice(1) };
+  }
+
+  Promise.all([
+    window.chargementChartJs,
+    fetch("{{ include.csv | relative_url }}").then(function (r) {
+      if (!r.ok) throw new Error("fichier introuvable");
+      return r.text();
+    })
+  ]).then(function (resultats) {
+    var csv = lireCsv(resultats[1]);
+    var xNumerique = csv.lignes.every(function (l) { return !isNaN(l[0]); });
+    var series = csv.entetes.slice(1).map(function (nom, i) {
+      return {
+        label: nom,
+        data: csv.lignes.map(function (l, j) {
+          return xNumerique && type !== "bar" ? { x: l[0], y: l[i + 1] } : l[i + 1];
+        })
+      };
+    });
+    new Chart(figure.querySelector("canvas"), {
+      type: type,
+      data: {
+        labels: csv.brut.map(function (l) { return l[0]; }),
+        datasets: series
+      },
+      options: {
+        plugins: { title: { display: {{ include.titre | default: '' | jsonify }} !== "", text: {{ include.titre | default: '' | jsonify }} } },
+        scales: {
+          x: { type: xNumerique && type !== "bar" ? "linear" : "category", title: { display: true, text: csv.entetes[0] } },
+          y: { title: { display: {{ include.y | default: '' | jsonify }} !== "", text: {{ include.y | default: '' | jsonify }} } }
+        }
+      }
+    });
+  }).catch(function (e) {
+    figure.insertAdjacentHTML("afterbegin",
+      "<p class=\"text-red-200\">Graphique impossible à afficher ({{ include.csv }}) : " + e.message + "</p>");
+  });
+})();
+</script>
