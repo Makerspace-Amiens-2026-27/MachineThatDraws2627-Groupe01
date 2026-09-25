@@ -1,8 +1,8 @@
 ---
 layout: default
-title: Nathan BARONICK
+title: Timothé LEJOSNE
 parent: Journal de bord
 has_children: true
 ---
 
-# Nathan BARONICK
+# Timothé LEJOSNE

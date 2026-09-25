@@ -1,8 +1,8 @@
 ---
 layout: default
-title: Nathan BARONICK
+title: Lylian COELHO
 parent: Journal de bord
 has_children: true
 ---
 
-# Nathan BARONICK
+# Lylian COELHO

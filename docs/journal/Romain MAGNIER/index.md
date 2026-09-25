@@ -1,8 +1,8 @@
 ---
 layout: default
-title: Nathan BARONICK
+title: Romain MAGNIER
 parent: Journal de bord
 has_children: true
 ---
 
-# Nathan BARONICK
+# Romain MAGNIER
