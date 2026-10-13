@@ -21,10 +21,9 @@ title: Études et choix techniques
 > Voir [Rechercher l'existant et étudier la faisabilité](https://doc.makerspace-amiens.fr/workshops/methodologie-de-projet/concepts/rechercher-existant-faisabilite/).
 
 | Solution étudiée | Source | Avantages | Inconvénients | Ce qu'on retient |
-|---|---|---|---|---|
-| Capteur de couleur TCS3200 | Projet Hackaday similaire | Simple, bien documenté | Sensible à la luminosité ambiante | À tester sous l'éclairage réel |
-| Tri par poids (balance) | Produit du commerce | Fiable, peu de composants | Ne distingue pas verre et plastique de même poids | Écarté : ne répond pas au besoin |
-| Vision par caméra | Forum robotique | Précis, flexible | Complexe à mettre en œuvre dans le délai | Écarté pour ce projet, piste pour une v2 |
+| :--- | :--- | :--- | :--- | :--- |
+| **Architecture CoreXY** (Modèles type Voron) | [Vidéo CoreXY Teaching Tech](https://www.youtube.com/watch?v=_ramiM3KHYE) | Mouvements rapides, moteurs fixes sur la structure. | Mouvement de courroie complexe, attention aux défauts d'alignement. | **Écarté :** Risque trop élevé avec l'impression et les erreurs de conceptions. On privilégie une architecture cartésienne classique pour sécuriser le bon fonctionnement de la machine plutôt que sa performance. |
+| **Levée de stylo par gravité** (Machine DIY) | [Vidéo DIY Machines](https://www.youtube.com/watch?v=XYqx5wg4oLU&t=81s) | Mécanique très simple à modéliser (un servomoteur soulève le stylo, la gravité le fait redescendre). | Ne compense pas les défauts du support. | **À tester en premier :** Solution retenue pour notre POC au S1 car simple  avec notre Servo Fitec. Si la pression manque, nous rajouterons un ressort. |
 
 ## Pré-étude de faisabilité
 
