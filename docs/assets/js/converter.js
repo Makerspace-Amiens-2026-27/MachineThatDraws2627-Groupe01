@@ -39,11 +39,53 @@ document.addEventListener("DOMContentLoaded", () => {
         reader.readAsDataURL(file);
     });
 
-    // 2. Action du bouton Générer (À compléter)
+
+    // 2. Action du bouton Générer (Vectorisation)
     generateBtn.addEventListener("click", () => {
-        // C'est ici que nous ferons appel à imagetracer.js à la prochaine étape
-        // pour transformer les pixels du canvas en vecteurs SVG.
-        console.log("Image prête pour la vectorisation !");
-        alert("L'image est chargée dans le canvas. Prêt à intégrer l'algorithme de vectorisation.");
+        console.log("Lancement de la vectorisation...");
+        
+        // Récupérer les pixels actuels du canvas
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        
+        // Options de vectorisation (réglées pour une machine à dessiner : noir et blanc, ligne fine)
+        const options = {
+            strokewidth: 1,
+            colorsampling: 0,
+            numberofcolors: 2, // Limiter au noir et blanc
+            mincolorratio: 0,
+            colorquantcycles: 1,
+            ltres: 0.1, // Précision des lignes droites
+            qtres: 1    // Précision des courbes
+        };
+
+        // Utiliser la librairie imagetracer.js pour générer le code SVG
+        // Attention : il faut que imagetracer.js soit bien présent dans assets/js/
+        const svgString = ImageTracer.imagedataToSVG(imageData, options);
+
+        // --- Affichage du tracé (SVG) sur le canvas ---
+        
+        // Créer un fichier virtuel avec le code SVG
+        const svgBlob = new Blob([svgString], {type: 'image/svg+xml;charset=utf-8'});
+        const url = URL.createObjectURL(svgBlob);
+        
+        const tracedImg = new Image();
+        tracedImg.onload = () => {
+            // Effacer l'image pixelisée d'origine
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Dessiner le nouveau tracé vectoriel à la place
+            ctx.drawImage(tracedImg, 0, 0);
+            
+            // Nettoyer la mémoire
+            URL.revokeObjectURL(url);
+            
+            // Débloquer l'étape suivante : le téléchargement du G-Code
+            downloadBtn.disabled = false;
+            console.log("Vectorisation terminée !");
+        };
+        tracedImg.src = url;
+        
+        // (Optionnel) Sauvegarder la chaîne SVG en variable globale pour la future génération G-Code
+        window.lastGeneratedSVG = svgString; 
     });
 });
