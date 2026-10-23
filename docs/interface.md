@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Interface de contrôle"
-nav_order: 2
+nav_order: 8
 ---
 
 # 🎛️ Interface de Génération et de Contrôle
