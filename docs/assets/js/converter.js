@@ -1,3 +1,4 @@
+console.log("🚀 Fichier converter.js chargé !");
 // === Variables globales pour le Web Serial et la simulation ===
 let port;
 let writer;
@@ -7,6 +8,7 @@ let gcodeLines = [];
 let currentLine = 0;
 
 document.addEventListener("DOMContentLoaded", () => {
+    console.log("✅ La page est prête, les boutons sont actifs !");
     // Récupération des éléments de l'interface
     const imageInput = document.getElementById("imageInput");
     const canvas = document.getElementById("previewCanvas");
