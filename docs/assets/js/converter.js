@@ -54,69 +54,74 @@ document.addEventListener("DOMContentLoaded", () => {
         reader.readAsDataURL(file);
     });
 
-    // 2. Action du bouton Générer (Vectorisation et Seuillage)
-    generateBtn.addEventListener("click", () => {
-        console.log("Lancement du traitement d'image...");
-        
-        // Récupérer les pixels actuels du canvas
-        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        const data = imageData.data;
-        
-        // Appliquer un filtre de Seuillage (Threshold)
-        const seuil = 128; // Valeur entre 0 (noir) et 255 (blanc)
-        
-        for (let i = 0; i < data.length; i += 4) {
-            // Calculer la luminosité du pixel
-            const r = data[i];
-            const g = data[i + 1];
-            const b = data[i + 2];
-            const luminance = 0.299 * r + 0.587 * g + 0.114 * b;
-            
-            // Si la luminosité est au-dessus du seuil, on met blanc, sinon noir
-            const couleur = luminance > seuil ? 255 : 0;
-            
-            data[i] = couleur;     // Rouge
-            data[i + 1] = couleur; // Vert
-            data[i + 2] = couleur; // Bleu
-            data[i + 3] = 255;     // Alpha (Opacité max)
+    // 2. Écouteur du bouton Générer (Vectorisation + Parser G-Code)
+        if (generateBtn) {
+            generateBtn.addEventListener("click", () => {
+                console.log("⚙️ Bouton Générer cliqué. Lancement du seuillage...");
+                
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                const data = imageData.data;
+                const seuil = 128; 
+                
+                for (let i = 0; i < data.length; i += 4) {
+                    const luminance = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
+                    const couleur = luminance > seuil ? 255 : 0;
+                    data[i] = couleur; data[i + 1] = couleur; data[i + 2] = couleur; data[i + 3] = 255;
+                }
+                
+                ctx.putImageData(imageData, 0, 0);
+                
+                const options = {
+                    strokewidth: 1, colorsampling: 0, numberofcolors: 2, 
+                    mincolorratio: 0, colorquantcycles: 1, ltres: 0.5, qtres: 1, pathomit: 8
+                };
+
+                const svgString = ImageTracer.imagedataToSVG(imageData, options);
+                
+                // --- LE PARSER SVG VERS G-CODE ---
+                console.log("🧠 Démarrage du Parser SVG vers G-Code...");
+                gcodeLines = ["G21", "G90"]; // Initialisation (Millimètres et coordonnées absolues)
+                
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(svgString, "image/svg+xml");
+                const paths = doc.querySelectorAll("path");
+                
+                paths.forEach(path => {
+                    const d = path.getAttribute("d");
+                    if (!d) return;
+                    
+                    // Découpage des commandes du tracé vectoriel (M = Move, L = Line)
+                    const commands = d.match(/[A-Z][^A-Z]*/ig); 
+                    if(!commands) return;
+
+                    commands.forEach(cmd => {
+                        const type = cmd[0].toUpperCase();
+                        // Extraction des coordonnées numériques
+                        const coords = cmd.slice(1).trim().split(/[\s,]+/);
+                        
+                        if (type === 'M' && coords.length >= 2) {
+                            // M = Déplacement rapide (Stylo levé sur la machine)
+                            gcodeLines.push(`G0 X${parseFloat(coords[0]).toFixed(2)} Y${parseFloat(coords[1]).toFixed(2)}`);
+                        } 
+                        else if (type === 'L' && coords.length >= 2) {
+                            // L = Tracé continu (Stylo baissé)
+                            gcodeLines.push(`G1 X${parseFloat(coords[0]).toFixed(2)} Y${parseFloat(coords[1]).toFixed(2)} F500`);
+                        }
+                    });
+                });
+
+                console.log(`✅ Parser terminé : ${gcodeLines.length} lignes de G-Code générées !`);
+                
+                if (downloadBtn) downloadBtn.disabled = false;
+                
+                // On efface l'image pour laisser place à l'animation
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Lancement de notre fonction d'animation visuelle
+                currentLine = 0;
+                simulateGCode(gcodeLines);
+            });
         }
-        
-        // Mettre à jour le canvas avec l'image en noir et blanc pur
-        ctx.putImageData(imageData, 0, 0);
-
-        // Options de vectorisation pour la machine
-        const options = {
-            strokewidth: 1,
-            colorsampling: 0,
-            numberofcolors: 2, 
-            mincolorratio: 0,
-            colorquantcycles: 1,
-            ltres: 0.5,
-            qtres: 1,
-            pathomit: 8
-        };
-
-        // Lancer la vectorisation sur l'image nettoyée
-        const svgString = ImageTracer.imagedataToSVG(imageData, options);
-
-        // Affichage du tracé sur le canvas
-        const svgBlob = new Blob([svgString], {type: 'image/svg+xml;charset=utf-8'});
-        const url = URL.createObjectURL(svgBlob);
-        
-        const tracedImg = new Image();
-        tracedImg.onload = () => {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.drawImage(tracedImg, 0, 0);
-            URL.revokeObjectURL(url);
-            
-            downloadBtn.disabled = false;
-            console.log("Vectorisation terminée !");
-        };
-        tracedImg.src = url;
-        
-        // Sauvegarder la chaîne SVG en variable globale
-        window.lastGeneratedSVG = svgString; 
-    });
 
     // 3. Connexion à la carte MakerUno
     connectSerialBtn.addEventListener("click", async () => {
@@ -224,7 +229,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let currentX = 0;
         let currentY = 0;
         
-        const scale = 5; 
+        const scale = 1; 
 
         function drawNextLine() {
             if (i >= gcodeArray.length) {
