@@ -1,6 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
-    // Récupération des éléments de l'interface
-   // === Variables globales pour le Web Serial et la simulation ===
+// === Variables globales pour le Web Serial et la simulation ===
 let port;
 let writer;
 let reader;
@@ -91,9 +89,9 @@ document.addEventListener("DOMContentLoaded", () => {
             numberofcolors: 2, 
             mincolorratio: 0,
             colorquantcycles: 1,
-            ltres: 0.5, // Augmenté pour lisser les lignes droites
-            qtres: 1,   // Tolérance des courbes
-            pathomit: 8 // Ignore les tout petits points parasites (bruit)
+            ltres: 0.5,
+            qtres: 1,
+            pathomit: 8
         };
 
         // Lancer la vectorisation sur l'image nettoyée
@@ -114,17 +112,15 @@ document.addEventListener("DOMContentLoaded", () => {
         };
         tracedImg.src = url;
         
-        // Sauvegarder la chaîne SVG en variable globale pour le futur parser
+        // Sauvegarder la chaîne SVG en variable globale
         window.lastGeneratedSVG = svgString; 
     });
-
-    // --- NOUVEAU CODE : COMMUNICATION WEB SERIAL ---
 
     // 3. Connexion à la carte MakerUno
     connectSerialBtn.addEventListener("click", async () => {
         try {
             port = await navigator.serial.requestPort();
-            await port.open({ baudRate: 115200 }); // Vitesse standard de GRBL
+            await port.open({ baudRate: 115200 });
             
             serialStatus.innerText = "Statut : Connecté à GRBL 🟢";
             serialStatus.style.color = "green";
@@ -175,13 +171,13 @@ document.addEventListener("DOMContentLoaded", () => {
     // 5. Lancement du POC (Carré magique de test)
     startDrawingBtn.addEventListener("click", () => {
         const testGcode = [
-            "G21",             // Unités en millimètres
-            "G90",             // Coordonnées absolues
-            "G0 X0 Y0",        // Point d'origine rapide
-            "G1 X10 Y0 F500",  // Trace bas (vitesse 500)
-            "G1 X10 Y10 F500", // Trace droite
-            "G1 X0 Y10 F500",  // Trace haut
-            "G1 X0 Y0 F500"    // Trace gauche (retour origine)
+            "G21",             
+            "G90",             
+            "G0 X0 Y0",        
+            "G1 X10 Y0 F500",  
+            "G1 X10 Y10 F500", 
+            "G1 X0 Y10 F500",  
+            "G1 X0 Y0 F500"    
         ];
         
         gcodeLines = testGcode;
@@ -193,22 +189,22 @@ document.addEventListener("DOMContentLoaded", () => {
         // 1. Simuler sur le canvas avant d'envoyer
         simulateGCode(gcodeLines);
 
-        // 2. Réveiller GRBL et lancer l'envoi physique après une courte pause
-        writer.write("\n\n");
-        setTimeout(sendNextGcodeLine, 1500); 
+        // 2. Réveiller GRBL et lancer l'envoi physique
+        if (writer) {
+            writer.write("\n\n");
+            setTimeout(sendNextGcodeLine, 1500); 
+        }
     });
 
     // 6. Fonction d'envoi ligne par ligne à la machine
     function sendNextGcodeLine() {
-        if (currentLine < gcodeLines.length) {
+        if (currentLine < gcodeLines.length && writer) {
             const line = gcodeLines[currentLine];
             console.log("Envoi G-Code : " + line);
             writer.write(line + "\n");
             currentLine++;
         }
     }
-
-    // --- NOUVEAU CODE : SIMULATEUR DE TRACÉ G-CODE ---
 
     // 7. Fonction de simulation visuelle sur le Canvas
     function simulateGCode(gcodeArray) {
@@ -257,4 +253,3 @@ document.addEventListener("DOMContentLoaded", () => {
         drawNextLine();
     }
 });
-})
