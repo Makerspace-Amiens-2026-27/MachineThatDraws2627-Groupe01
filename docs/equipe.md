@@ -22,12 +22,12 @@ La répartition suit directement le découpage de notre [Cahier des Charges Fonc
 
 | Rôle / Sous-ensemble | Responsable | Backup | Ce qu'il couvre |
 |---|---|---|---|
-| **Déplacement planaire X/Y** (`F1.1.1` à `F1.1.4`) | Lylian COELHO | Timothé LEJOSNE, Nathan BARONICK | CAO OnShape du portique mobile, chariots latéraux, supports moteurs NEMA 17, guidages lisses/PTFE sans arc-boutement et tension des courroies GT2 |
+| **Déplacement planaire X/Y** (`F1.1.1` à `F1.1.4`) | Lylian COELHO | Timothé LEJOSNE / Nathan BARONICK | CAO OnShape du portique mobile, chariots latéraux, supports moteurs NEMA 17, guidages lisses/PTFE sans arc-boutement et tension des courroies GT2 |
 | **Effecteur & Axe Z** (`F1.2.1` à `F1.2.3`) | Timothé LEJOSNE | Nathan BARONICK | CAO OnShape du chariot central, système de levée par gravité + support servomoteur Fitec, maintien des stylos (`8 à 12 mm`) et accroche de la courroie X |
-| **Structure porteuse, maintien papier & sécurité mécanique** (`F1.3.1` à `F1.3.3`, `F4.1.1` à `F4.1.2`) | Romain MAGNIER | Timothé LEJOSNE, Nathan BARONICK | Châssis fixe et stabilité sur table, système d'immobilisation rapide de la feuille (`< 15 s`), encombrement/masse, intégration finale et ergonomie |
-| **Énergie, électronique, firmware GRBL & sécurité** (`F2.1.1` à `F2.3.3`) | Archibald ROZIE | Timothé LEJOSNE, Nathan BARONICK | Alimentation 12 V, câblage Arduino Uno + CNC Shield V3, réglage `Vref` des drivers, flash et config de GRBL-servo, arrêt d'urgence (`< 1 s`) et fins de course (S2) |
+| **Structure porteuse, maintien papier & sécurité mécanique** (`F1.3.1` à `F1.3.3`, `F4.1.1` à `F4.1.2`) | Romain MAGNIER | Timothé LEJOSNE / Nathan BARONICK | Châssis fixe et stabilité sur table, système d'immobilisation rapide de la feuille (`< 15 s`), encombrement/masse, intégration finale et ergonomie |
+| **Énergie, électronique, firmware GRBL & sécurité** (`F2.1.1` à `F2.3.3`) | Archibald ROZIE | Timothé LEJOSNE / Nathan BARONICK | Alimentation 12 V, câblage Arduino Uno + CNC Shield V3, réglage `Vref` des drivers, flash et config de GRBL-servo, arrêt d'urgence (`< 1 s`) et fins de course (S2) |
 | **Chaîne logicielle & IHM Web** (`F3.1.1` à `F3.3.3`) | Nathan BARONICK | Timothé LEJOSNE | Tests initiaux (Inkscape / GRBL-Plotter), puis développement du site web maison : import/vectorisation (`ImageTracerJS`), conversion SVG → G-code, prévisualisation et envoi via `Web Serial API` |
-| **Coordination & planning** (`F4.2.1` à `F4.2.3`) | Romain MAGNIER | Timothé LEJOSNE, Nathan BARONICK | Suivi des jalons (POC S1 / Journée des Projets S2), gestion des fabrications au MakerSpace et animation des points d'équipe |
+| **Coordination & planning** (`F4.2.1` à `F4.2.3`) | Romain MAGNIER | Timothé LEJOSNE / Nathan BARONICK | Suivi des jalons (POC S1 / Journée des Projets S2), gestion des fabrications au MakerSpace et animation des points d'équipe |
 | **Coordination documentation & GitHub** (`F4.2.4`) | Timothé LEJOSNE | Nathan BARONICK | Cohérence du dépôt et du site GitHub Pages, traçabilité CdCF/études, suivi des journaux de bord et relecture croisée |
 
 ### Responsables d'interfaces critiques
@@ -36,7 +36,7 @@ La répartition suit directement le découpage de notre [Cahier des Charges Fonc
 |---|---|---|
 | **Axes X/Y ↔ Effecteur Z** (`1.1 ↔ 1.2`) | Timothé LEJOSNE | Entraxe exact des arbres de l'axe X, tolérances des logements PTFE (`12,2 mm`) et passage de la courroie GT2 (`F1.1.2`) |
 | **Axes X/Y ↔ Structure porteuse** (`1.1 ↔ 1.3`) | Lylian COELHO | Fixation des arbres Y sur le bâti et respect de l'orthogonalité `90° ± 0,5°` (`F1.1.3`, `F1.3.1`) |
-| **Électronique ↔ Mécanique** (`2.x ↔ 1.x`) | Archibald ROZIE | Implantation physique des fins de course (`F2.3.2`), accessibilité de l'arrêt d'urgence (`F2.3.3`) et guidage des câbles hors zone mobile (`F4.1.1`) |
+| **Électronique ↔ Mécanique** (`2.x ↔ 1.x`) | Archibald ROZIE / Romain MAGNIER | Implantation physique des fins de course (`F2.3.2`), accessibilité de l'arrêt d'urgence (`F2.3.3`) et guidage des câbles hors zone mobile (`F4.1.1`) |
 | **IHM Web ↔ Firmware GRBL** (`3.x ↔ 2.2`) | Nathan BARONICK | Compatibilité du flux G-code via `Web Serial API`, gestion des buffers série (`F2.2.1`, `F3.3.2`) et commandes PWM de levée/baisse du servo (`F1.2.1`) |
 
 ## Fonctionnement
