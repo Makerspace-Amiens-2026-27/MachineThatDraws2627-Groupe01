@@ -18,7 +18,7 @@ title: Équipe et rôles
 
 ## Rôles
 
-La répartition suit directement le découpage de notre [Cahier des Charges Fonctionnel](etudes.html#cahier-des-charges-fonctionnel-cdcf). Chaque sous-ensemble dispose d'un responsable (qui pilote l'avancement et valide les choix techniques) et d'un backup (qui prend le relais en cas d'absence ou de surcharge).
+La répartition suit directement le découpage de notre Cahier des Charges. Chaque sous-ensemble dispose d'un responsable (qui pilote l'avancement et valide les choix techniques) et d'un backup (qui prend le relais en cas d'absence ou de surcharge).
 
 | Rôle / Sous-ensemble | Responsable | Backup | Ce qu'il couvre |
 |---|---|---|---|
