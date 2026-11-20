@@ -30,17 +30,9 @@ La répartition suit directement le découpage de notre Cahier des Charges. Chaq
 | **Coordination & planning** (`F4.2.1` à `F4.2.3`) | Romain MAGNIER | Timothé LEJOSNE / Nathan BARONICK | Suivi des jalons (POC S1 / Journée des Projets S2), gestion des fabrications au MakerSpace et animation des points d'équipe |
 | **Coordination documentation & GitHub** (`F4.2.4`) | Timothé LEJOSNE | Nathan BARONICK | Cohérence du dépôt et du site GitHub Pages, traçabilité CdCF/études, suivi des journaux de bord et relecture croisée |
 
-### Responsables d'interfaces critiques
-
-| Interface (entre sous-ensembles) | Responsable | Points de vigilance (liés au CdCF) |
-|---|---|---|
-| **Axes X/Y ↔ Effecteur Z** (`1.1 ↔ 1.2`) | Timothé LEJOSNE | Entraxe exact des arbres de l'axe X, tolérances des logements PTFE (`12,2 mm`) et passage de la courroie GT2 (`F1.1.2`) |
-| **Axes X/Y ↔ Structure porteuse** (`1.1 ↔ 1.3`) | Lylian COELHO | Fixation des arbres Y sur le bâti et respect de l'orthogonalité `90° ± 0,5°` (`F1.1.3`, `F1.3.1`) |
-| **Électronique ↔ Mécanique** (`2.x ↔ 1.x`) | Archibald ROZIE / Romain MAGNIER | Implantation physique des fins de course (`F2.3.2`), accessibilité de l'arrêt d'urgence (`F2.3.3`) et guidage des câbles hors zone mobile (`F4.1.1`) |
-| **IHM Web ↔ Firmware GRBL** (`3.x ↔ 2.2`) | Nathan BARONICK | Compatibilité du flux G-code via `Web Serial API`, gestion des buffers série (`F2.2.1`, `F3.3.2`) et commandes PWM de levée/baisse du servo (`F1.2.1`) |
 
 ## Fonctionnement
 
-* **Réunions :** Un point rapide de quelques minutes en début de chaque séance au MakerSpace pour synchroniser l'avancement et lever les blocages, complété par un bilan en fin de séance pour fixer les objectifs suivants.
+* **Réunions :** Un point rapide de quelques minutes en début de chaque séance au MakerSpace pour synchroniser l'avancement et lever les blocages, complété par un bilan en fin de séance pour fixer les objectifs suivants et remplir nos journaux respectifs.
 * **Communication :** Échanges rapides sur notre groupe de messagerie pour la coordination entre les séances, et utilisation de GitHub pour centraliser la documentation, le code et les décisions techniques.
 * **Prise de décision :** Recherche du consensus lors des points d'équipe. En cas de désaccord technique, le responsable du sous-ensemble concerné décide en s'appuyant sur les critères du CdCF.
