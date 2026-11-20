@@ -22,13 +22,13 @@ La répartition suit directement le découpage de notre [Cahier des Charges Fonc
 
 | Rôle / Sous-ensemble | Responsable | Backup | Ce qu'il couvre |
 |---|---|---|---|
-| **Déplacement planaire X/Y** (`F1.1.1` à `F1.1.4`) | Lylian COELHO | Romain MAGNIER | CAO OnShape du portique mobile, chariots latéraux, supports moteurs NEMA 17, guidages lisses/PTFE sans arc-boutement et tension des courroies GT2 |
+| **Déplacement planaire X/Y** (`F1.1.1` à `F1.1.4`) | Lylian COELHO | Timothé LEJOSNE, Nathan BARONICK | CAO OnShape du portique mobile, chariots latéraux, supports moteurs NEMA 17, guidages lisses/PTFE sans arc-boutement et tension des courroies GT2 |
 | **Effecteur & Axe Z** (`F1.2.1` à `F1.2.3`) | Timothé LEJOSNE | Nathan BARONICK | CAO OnShape du chariot central, système de levée par gravité + support servomoteur Fitec, maintien des stylos (`8 à 12 mm`) et accroche de la courroie X |
-| **Structure porteuse, maintien papier & sécurité mécanique** (`F1.3.1` à `F1.3.3`, `F4.1.1` à `F4.1.2`) | Romain MAGNIER | Lylian COELHO | Châssis fixe et stabilité sur table, système d'immobilisation rapide de la feuille (`< 15 s`), encombrement/masse, intégration finale et ergonomie |
-| **Énergie, électronique, firmware GRBL & sécurité** (`F2.1.1` à `F2.3.3`) | Archibald ROZIE | Romain MAGNIER | Alimentation 12 V, câblage Arduino Uno + CNC Shield V3, réglage `Vref` des drivers, flash et config de GRBL-servo, arrêt d'urgence (`< 1 s`) et fins de course (S2) |
-| **Chaîne logicielle & IHM Web** (`F3.1.1` à `F3.3.3`) | Nathan BARONICK | Archibald ROZIE | Tests initiaux (Inkscape / GRBL-Plotter), puis développement du site web maison : import/vectorisation (`ImageTracerJS`), conversion SVG → G-code, prévisualisation et envoi via `Web Serial API` |
-| **Coordination & planning** (`F4.2.1` à `F4.2.3`) | Romain MAGNIER | Timothé LEJOSNE | Suivi des jalons (POC S1 / Journée des Projets S2), gestion des fabrications au MakerSpace et animation des points d'équipe |
-| **Coordination documentation & GitHub** (`F4.2.4`) | Timothé LEJOSNE | Lylian COELHO | Cohérence du dépôt et du site GitHub Pages, traçabilité CdCF/études, suivi des journaux de bord et relecture croisée |
+| **Structure porteuse, maintien papier & sécurité mécanique** (`F1.3.1` à `F1.3.3`, `F4.1.1` à `F4.1.2`) | Romain MAGNIER | Timothé LEJOSNE, Nathan BARONICK | Châssis fixe et stabilité sur table, système d'immobilisation rapide de la feuille (`< 15 s`), encombrement/masse, intégration finale et ergonomie |
+| **Énergie, électronique, firmware GRBL & sécurité** (`F2.1.1` à `F2.3.3`) | Archibald ROZIE | Timothé LEJOSNE, Nathan BARONICK | Alimentation 12 V, câblage Arduino Uno + CNC Shield V3, réglage `Vref` des drivers, flash et config de GRBL-servo, arrêt d'urgence (`< 1 s`) et fins de course (S2) |
+| **Chaîne logicielle & IHM Web** (`F3.1.1` à `F3.3.3`) | Nathan BARONICK | Timothé LEJOSNE | Tests initiaux (Inkscape / GRBL-Plotter), puis développement du site web maison : import/vectorisation (`ImageTracerJS`), conversion SVG → G-code, prévisualisation et envoi via `Web Serial API` |
+| **Coordination & planning** (`F4.2.1` à `F4.2.3`) | Romain MAGNIER | Timothé LEJOSNE, Nathan BARONICK | Suivi des jalons (POC S1 / Journée des Projets S2), gestion des fabrications au MakerSpace et animation des points d'équipe |
+| **Coordination documentation & GitHub** (`F4.2.4`) | Timothé LEJOSNE | Nathan BARONICK | Cohérence du dépôt et du site GitHub Pages, traçabilité CdCF/études, suivi des journaux de bord et relecture croisée |
 
 ### Responsables d'interfaces critiques
 
@@ -41,12 +41,6 @@ La répartition suit directement le découpage de notre [Cahier des Charges Fonc
 
 ## Fonctionnement
 
-* **Réunions :** Un point rapide de 10 minutes en début de chaque séance au MakerSpace pour synchroniser l'avancement et lever les blocages, complété par un bilan en fin de séance pour fixer les objectifs suivants.
+* **Réunions :** Un point rapide de quelques minutes en début de chaque séance au MakerSpace pour synchroniser l'avancement et lever les blocages, complété par un bilan en fin de séance pour fixer les objectifs suivants.
 * **Communication :** Échanges rapides sur notre groupe de messagerie pour la coordination entre les séances, et utilisation de GitHub pour centraliser la documentation, le code et les décisions techniques.
-* **Prise de décision :** Recherche du consensus lors des points d'équipe. En cas de désaccord technique, le responsable du sous-ensemble concerné tranche en s'appuyant sur les critères du CdCF ; si le choix impacte une interface entre plusieurs sous-ensembles, la décision est prise par vote à la majorité ou arbitrée avec l'encadrant du MakerSpace.
-
-### Suivi des tâches
-
-L'avancement des sous-ensembles et le suivi des jalons S1/S2 sont pilotés via les **Issues** et le tableau **GitHub Projects** du dépôt.
-
-[📋 Tableau de suivi du projet]({{ site.gh_edit_repository }}/projects){: .btn }
+* **Prise de décision :** Recherche du consensus lors des points d'équipe. En cas de désaccord technique, le responsable du sous-ensemble concerné décide en s'appuyant sur les critères du CdCF.
