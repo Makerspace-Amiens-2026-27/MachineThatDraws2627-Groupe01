@@ -110,19 +110,19 @@ graph LR
     FP1 --> F32["F3.2 : Générer le G-Code et simuler"]
     FP1 --> F33["F3.3 : Piloter depuis le PC"]
 
-    F31 --> S31A["Seuillage JS + ImageTracerJS ✅"]:::retenu
+    F31 --> S31A["Seuillage JS + ImageTracerJS "]:::retenu
     F31 --> S31B["Vectorisation manuelle sur Inkscape"]
     F31 --> S31C["Script Python + OpenCV"]
 
-    F32 --> S32A["Parser SVG maison + simulateur Canvas ✅"]:::retenu
+    F32 --> S32A["Parser SVG maison + simulateur Canvas "]:::retenu
     F32 --> S32B["Plugin G-Code Inkscape"]
 
-    F33 --> S33A["Page web Jekyll + Web Serial API ✅"]:::retenu
+    F33 --> S33A["Page web Jekyll + Web Serial API "]:::retenu
     F33 --> S33B["UGS / GRBL-Plotter"]
     F33 --> S33C["Application bureau Python + PySerial"]
 
     classDef retenu fill:#d4edda,stroke:#28a745,color:#155724,stroke-width:2px;
-    ```
+```
 
 ### Choix : titre du choix
 
