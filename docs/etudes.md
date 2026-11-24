@@ -85,6 +85,45 @@ graph LR
     classDef retenu fill:#d4edda,stroke:#28a745,color:#155724,stroke-width:2px;
 ```
 
+```mermaid
+graph LR
+    FP1["FP1 : Reproduire une image"] --> F21["F2.1 : Alimenter et protéger"]
+    FP1 --> F22["F2.2 : Piloter les moteurs"]
+    FP1 --> F23["F2.3 : Définir l'origine et sécuriser"]
+
+    F21 --> S21A["Alim secteur 12V DC + réglage Vref "]:::retenu
+    F21 --> S21B["Alimentation sur batterie LiPo"]
+
+    F22 --> S22A["MakerUno + CNC Shield V3 + GRBL-servo "]:::retenu
+    F22 --> S22B["Code Arduino maison sans firmware"]
+    F22 --> S22C["Raspberry Pi + drivers dédiés"]
+
+    F23 --> S23A["Origine manuelle (S1) puis fins de course (S2) "]:::retenu
+    F23 --> S23B["Encodeurs absolus sur moteurs"]
+
+    classDef retenu fill:#d4edda,stroke:#28a745,color:#155724,stroke-width:2px;
+```
+
+```mermaid
+graph LR
+    FP1["FP1 : Reproduire une image"] --> F31["F3.1 : Traiter et vectoriser l'image"]
+    FP1 --> F32["F3.2 : Générer le G-Code et simuler"]
+    FP1 --> F33["F3.3 : Piloter depuis le PC"]
+
+    F31 --> S31A["Seuillage JS + ImageTracerJS ✅"]:::retenu
+    F31 --> S31B["Vectorisation manuelle sur Inkscape"]
+    F31 --> S31C["Script Python + OpenCV"]
+
+    F32 --> S32A["Parser SVG maison + simulateur Canvas ✅"]:::retenu
+    F32 --> S32B["Plugin G-Code Inkscape"]
+
+    F33 --> S33A["Page web Jekyll + Web Serial API ✅"]:::retenu
+    F33 --> S33B["UGS / GRBL-Plotter"]
+    F33 --> S33C["Application bureau Python + PySerial"]
+
+    classDef retenu fill:#d4edda,stroke:#28a745,color:#155724,stroke-width:2px;
+    ```
+
 ### Choix : titre du choix
 
 **Contexte :** …
