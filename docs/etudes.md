@@ -66,11 +66,23 @@ solutions possibles :
 
 ```mermaid
 graph LR
-    A[FP1 : trier les déchets] --> B[Détecter le type de déchet]
-    B --> C1[Capteur de couleur]
-    B --> C2[Vision par caméra]
-    B --> C3[Tri par poids]
-    C1 --> D[Solution retenue]
+    FP1["FP1 : Reproduire une image"] --> F11["F1.1 : Déplacer le stylo en X et Y"]
+    FP1 --> F12["F1.2 : Lever et maintenir le stylo (Z)"]
+    FP1 --> F13["F1.3 : Supporter la machine et la feuille"]
+
+    F11 --> S11A["Portique cartésien"]:::retenu
+    F11 --> S11B["Architecture CoreXY"]
+    F11 --> S11C["Traceur vertical (Polargraph)"]
+    F11 --> S11D["Transmission par tiges filetées"]
+
+    F12 --> S12A["Servomoteur + gravité"]:::retenu
+    F12 --> S12B["Solénoïde"]
+    F12 --> S12C["Axe Z vis-écrou"]
+
+    F13 --> S13A["Pièces 3D"]:::retenu
+    F13 --> S13B["Châssis aluminium usiné + plateau adhésif"]
+
+    classDef retenu fill:#d4edda,stroke:#28a745,color:#155724,stroke-width:2px;
 ```
 
 ### Choix : titre du choix
